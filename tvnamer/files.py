@@ -1,3 +1,4 @@
+import xattr
 import os
 import re
 import errno
@@ -436,7 +437,8 @@ class Renamer(object):
     def __init__(self, filename):
         # type: (str) -> None
         self.filename = os.path.abspath(filename)
-
+        xattr.setxattr(self.filename, b'user.filename', os.path.basename(self.filename).encode('utf8'))
+        
     def new_path(
         self,
         new_path=None, # type: Optional[str]
